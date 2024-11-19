@@ -1,5 +1,40 @@
-import styles from "./AuthInputs.module.css";
 import { useState } from 'react';
+import {styled} from 'styled-components';
+import Button from "../Button";
+import Input from "../Input";
+
+const ControlContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+`;
+
+const StyledAuthInputs = styled.div`
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  background: linear-gradient(180deg, #474232 0%, #28271c 100%);
+  color: white;
+`;
+
+const Actions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+`;
+
+const TextButton = styled.button`
+  color: #f0b322;
+  border: none;
+
+  &:hover { // with a space between & and :hover it would be targeting child elements
+      color: #f0920e;
+  }
+`;
 
 export default function AuthInputs() {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -22,33 +57,31 @@ export default function AuthInputs() {
   const passwordNotValid = submitted && enteredPassword.trim().length < 6;
 
   return (
-    <div id={styles['auth-inputs']}>
-      <div className={styles.controls}>
-        <p>
-          <label className={emailNotValid ? styles.invalid : undefined}>Email</label>
-          <input
-            type="email"
-            className={emailNotValid ? styles.invalid : undefined}
-            onChange={(event) => handleInputChange('email', event.target.value)}
-          />
-        </p>
-        <p>
-          <label className={passwordNotValid ? styles.invalid : undefined}>Password</label>
-          <input
-            type="password"
-            className={passwordNotValid ? styles.invalid : undefined}
-            onChange={(event) =>
-              handleInputChange('password', event.target.value)
-            }
-          />
-        </p>
-      </div>
-      <div className={styles.actions}>
-        <button type="button" className={styles['text-button']}>
+    <StyledAuthInputs>
+      <ControlContainer>
+        <Input
+          label="Email"
+          invalid={emailNotValid}
+          type="email"
+          onChange={(event) =>
+            handleInputChange('email', event.target.value)
+          }
+        />
+        <Input
+          label="Password"
+          invalid={passwordNotValid}
+          type="password"
+          onChange={(event) =>
+            handleInputChange('password', event.target.value)
+          }
+        />
+      </ControlContainer>
+      <Actions>
+        <TextButton type="button">
           Create a new account
-        </button>
-        <button className={styles.button} onClick={handleLogin}>Sign In</button>
-      </div>
-    </div>
+        </TextButton>
+        <Button onClick={handleLogin}>Sign In</Button>
+      </Actions>
+    </StyledAuthInputs>
   );
 }
