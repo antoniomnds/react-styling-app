@@ -1,4 +1,4 @@
-import "./AuthInputs.css";
+import styles from "./AuthInputs.module.css";
 import { useState } from 'react';
 
 export default function AuthInputs() {
@@ -22,32 +22,32 @@ export default function AuthInputs() {
   const passwordNotValid = submitted && enteredPassword.trim().length < 6;
 
   return (
-    <div id="auth-inputs">
-      <div className="controls">
+    <div id={styles['auth-inputs']}>
+      <div className={styles.controls}>
         <p>
-          <label>Email</label>
+          <label className={emailNotValid ? styles.invalid : undefined}>Email</label>
           <input
             type="email"
-            className={emailNotValid ? 'invalid' : undefined}
+            className={emailNotValid ? styles.invalid : undefined}
             onChange={(event) => handleInputChange('email', event.target.value)}
           />
         </p>
         <p>
-          <label>Password</label>
+          <label className={passwordNotValid ? styles.invalid : undefined}>Password</label>
           <input
             type="password"
-            className={passwordNotValid ? 'invalid' : undefined}
+            className={passwordNotValid ? styles.invalid : undefined}
             onChange={(event) =>
               handleInputChange('password', event.target.value)
             }
           />
         </p>
       </div>
-      <div className="actions">
-        <button type="button" className="text-button">
+      <div className={styles.actions}>
+        <button type="button" className={styles['text-button']}>
           Create a new account
         </button>
-        <button className='button' onClick={handleLogin}>Sign In</button>
+        <button className={styles.button} onClick={handleLogin}>Sign In</button>
       </div>
     </div>
   );
